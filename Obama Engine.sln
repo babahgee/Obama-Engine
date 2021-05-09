@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31129.286
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9092AA53-FB77-4645-B42D-1CCCA6BD08BD}") = "Obama Engine", "Obama Engine\Obama Engine.njsproj", "{455A9BD7-6C19-4FE1-A4FF-AADB4D74D36A}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{455A9BD7-6C19-4FE1-A4FF-AADB4D74D36A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{455A9BD7-6C19-4FE1-A4FF-AADB4D74D36A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{455A9BD7-6C19-4FE1-A4FF-AADB4D74D36A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{455A9BD7-6C19-4FE1-A4FF-AADB4D74D36A}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {C2452212-477D-4DC9-B52C-3E4C4001B752}
+	EndGlobalSection
+EndGlobal

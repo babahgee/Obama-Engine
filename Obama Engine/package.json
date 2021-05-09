@@ -1,0 +1,15 @@
+{
+  "name": "obama-engine",
+  "version": "0.0.0",
+  "description": "Obama Engine",
+  "main": "app.js",
+  "author": {
+    "name": ""
+  },
+  "dependencies": {
+    "colors": "^1.4.0",
+    "express": "^4.17.1",
+    "socket-io": "^1.0.0",
+    "socket.io": "^4.0.2"
+  }
+}
