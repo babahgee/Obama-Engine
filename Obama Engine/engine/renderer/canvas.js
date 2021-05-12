@@ -1,4 +1,6 @@
+import { EasingFunctions } from "../essentials/animator.js";
 import { Debug } from "../essentials/logger.js";
+import { GenerateUniqueID } from "../main.js";
 
 export class pt_renderer_canvas {
     /**
@@ -10,6 +12,14 @@ export class pt_renderer_canvas {
      * @param {boolean} options.contextMenu
      */
     constructor(width, height, options) {
+        let processStart, processEnd, processDifference;
+
+        // Start calculating the process time.
+        processStart = Date.now();
+
+        // Logging that the canvas renderer is loading.
+        Debug.Log("OBAMA ENGINE", "Initializing canvas renderer...", "yellow");
+
         this.width = width;
         this.height = height;
         this.options = options;
@@ -19,6 +29,17 @@ export class pt_renderer_canvas {
         this.styles = {
             backgroundColor: undefined
         };
+
+        // Mouse properties.
+        this.mouse = {
+            x: 0,
+            y: 0,
+            buttons: {
+                left: false,
+                middle: false,
+                right: false
+            }
+        }
 
         // Check if the required arguments are correct.
         if (typeof width !== "number") Debug.Error("invalid type", "The required argument (width) is not a number type.");
@@ -48,6 +69,40 @@ export class pt_renderer_canvas {
             };
         }
 
+        // Mouse events.
+        element.addEventListener("mousemove", event => {
+            this.mouse.x = event.clientX;
+            this.mouse.y = event.clientY;
+        });
+
+        element.addEventListener("mousedown", event => {
+            switch (event.button) {
+                case 0:
+                    this.mouse.buttons.left = true;
+                    break;
+                case 1:
+                    this.mouse.buttons.middle = true;
+                    break;
+                case 2:
+                    this.mouse.buttons.right = true;
+                    break;
+            }
+        });
+
+        element.addEventListener("mouseup", event => {
+            switch (event.button) {
+                case 0:
+                    this.mouse.buttons.left = false;
+                    break;
+                case 1:
+                    this.mouse.buttons.middle = false;
+                    break;
+                case 2:
+                    this.mouse.buttons.right = false;
+                    break;
+            }
+        });
+
         // Other thingies.
         element.className = "obama-engine-canvas";
         element.setAttribute("autoload", true);
@@ -55,6 +110,12 @@ export class pt_renderer_canvas {
         // Apply html element and canvas rendering context to current instance.
         this.element = element;
         this.ctx = element.getContext("2d");
+
+        // Stop calculating the process time and measure the difference.
+        processEnd = Date.now();
+        processDifference = processEnd - processStart;
+
+        Debug.Log("obama engine", `Succesfully initialized canvas renderer in ${processDifference}ms.`, "lime");
     }
     /**
      * Appends canvas renderer element to an HTMLELement instance.
@@ -107,6 +168,40 @@ export class pt_renderer_canvas {
                 break;
         }
     }
+
+    /**
+     * Destroys a render object.
+     * @param {RenderObject} renderObject
+     */
+    Destroy(renderObject) {
+        if (typeof renderObject !== "undefined") {
+            if (renderObject instanceof RenderObject) {
+                let i = 0;
+
+                while (i < this.renderObjects.length) {
+
+                    let rObject = this.renderObjects[i];
+
+                    if (rObject.id == renderObject.id) {
+                        this.renderObjects.splice(i, 1);
+
+                        renderObject = null;
+
+                        return true;
+                    }
+
+                    i += 1;
+                }
+            } else {
+                Debug.Error("unexpected instance", "The given argument (as renderObject) is not a RenderObject instance.");
+
+                return;
+            }
+        } else {
+            return "Undefined argument has been passed. Won't throw an error log.";
+        }
+    }
+
     Render() {
         let i = 0;
 
@@ -133,13 +228,50 @@ export class pt_renderer_canvas {
 
             let renderObject = this.renderObjects[i];
 
-            if (typeof renderObject.update == "function") {
-                renderObject.update();
+            if (typeof renderObject.updateMain == "function") {
+                renderObject.updateMain();
             }
 
             i += 1;
         }
 
         ctx.restore();
+    }
+}
+
+export class RenderObject {
+    constructor() {
+        this.id = GenerateUniqueID(18);
+        this.creationTimeStamp = performance.now();
+        this.type = "renderobject";
+        this.priority = 0 || "highest";
+        this.updaters = [];
+
+    }
+    updateMain() {
+        let i = 0;
+
+        while (i < this.updaters.length) {
+
+            let updater = this.updaters[i];
+
+            if (typeof updater.Update == "function") {
+                updater.Update();
+            }
+
+            i += 1;
+        }
+
+        this.update();
+    }
+    AddUpdater() {
+
+    }
+    /**
+     * Finds for a render object instance in a renderer.
+     * @param {string} objectID
+     */
+    static GetObjectInRenderer(renderer, objectID) {
+
     }
 }

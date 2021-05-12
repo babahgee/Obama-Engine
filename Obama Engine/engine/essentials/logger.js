@@ -7,7 +7,7 @@ export const Debug = {
      */
     Log: function (type, message, color) {
         if (typeof type == "string" && typeof message == "string" && typeof color == "string") {
-            console.log(`%c${type.toUpperCase()} %c${message}`, "color: red; background: #000;", `color: ${color};`);
+            console.log(`%c[${type.toUpperCase()}]%c ${message}`, "color: red; background: #000;", `color: ${color};`);
 
             return [type, message, color];
         } else {

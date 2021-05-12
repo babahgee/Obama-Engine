@@ -29,6 +29,9 @@
   </PropertyGroup>
   <ItemGroup>
     <Content Include="app.js" />
+    <Content Include="engine\controllers\velocityController.js" />
+    <Content Include="engine\essentials\animator.js" />
+    <Content Include="engine\essentials\essentials.js" />
     <Content Include="engine\essentials\logger.js" />
     <Content Include="engine\main.js" />
     <Content Include="engine\objects\rectangle.js" />
@@ -44,6 +47,7 @@
   <ItemGroup>
     <Folder Include="engine\" />
     <Folder Include="engine\essentials\" />
+    <Folder Include="engine\controllers\" />
     <Folder Include="engine\objects\" />
     <Folder Include="engine\renderer\" />
   </ItemGroup>

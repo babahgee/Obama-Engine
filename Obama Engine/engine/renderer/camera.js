@@ -1,5 +1,5 @@
 import { Debug } from "../essentials/logger.js";
-import { pt_renderer_canvas } from "./canvas.js";
+import { pt_renderer_canvas, RenderObject } from "./canvas.js";
 
 export class pt_renderer_camera {
     constructor(x, y, width, height) {
@@ -25,6 +25,23 @@ export class pt_renderer_camera {
             }
         } else {
             Debug.Error("undefined argument", "The required argument has to be a Canvas Renderer instance.");
+        }
+    }
+    /**
+     * Sets camera to a render object.
+     * @param {RenderObject} renderObject
+     */
+    SetTo(renderObject) {
+        if (typeof renderObject !== "undefined") {
+            if (renderObject instanceof RenderObject) {
+
+            } else {
+                Debug.Error("unexpected instance", "The required argument has to be a Canvas Renderer instance.");
+                return;
+            }
+        } else {
+            Debug.Error("undefined argument", "The required argument has to be a RenderObject instance.");
+            return;
         }
     }
 }

@@ -1,5 +1,5 @@
 import { Debug } from "../essentials/logger.js";
-import { pt_renderer_canvas } from "../renderer/canvas.js";
+import { pt_renderer_canvas, RenderObject } from "../renderer/canvas.js";
 
 /**
  * Converts array with colors to a rgb string.
@@ -23,7 +23,11 @@ function convertArrayToString(arr) {
     }
 }
 
-export class pt_objects_rectangle {
+export class pt_objects_rectangle extends RenderObject {
+    // Private propertiess.
+    #ctx;
+    #canvasInstance;
+
     /**
      * Creates a rectangle.
      * @param {number} x
@@ -40,6 +44,8 @@ export class pt_objects_rectangle {
      * @param {number} styles.blurStrength
      */
     constructor(x, y, width, height, styles) {
+        super();
+
         this.x = x;
         this.y = y;
         this.width = width;
@@ -47,19 +53,18 @@ export class pt_objects_rectangle {
 
         this.styles = styles;
 
-        this.events = {}
+        this.events = {onHover: undefined};
+        this.eventStates = {isHovering: false};
 
         // Parse style values.
         if (typeof styles.backgroundColor == "object") this.styles.backgroundColor = convertArrayToString(this.styles.backgroundColor);
         if (typeof styles.borderColor == "object") this.styles.borderColor = convertArrayToString(this.styles.borderColor);
         if (typeof styles.blurColor == "object") this.styles.blurColor = convertArrayToString(this.styles.blurColor);
-
-        this.ctx;
     }
     draw() {
-        if (typeof this.ctx == "undefined") return;
+        if (typeof this.#ctx == "undefined") return;
 
-        let ctx = this.ctx;
+        let ctx = this.#ctx;
 
         ctx.save();
 
@@ -86,9 +91,27 @@ export class pt_objects_rectangle {
             ctx.stroke();
         }
 
+        ctx.closePath();
         ctx.restore();
     }
     update() {
+
+        const { mouse } = this.#canvasInstance;
+
+        if (typeof this.events.onHover == "function") {
+            if (mouse.x >= this.x && mouse.x <= this.x + this.width && mouse.y >= this.y && mouse.y <= this.y + this.height) {
+                if (!this.eventStates.isHovering) {
+
+                    this.events.onHover(this);
+
+
+                    this.eventStates.isHovering = true;
+                }
+            } else {
+                this.eventStates.isHovering = false;
+            }
+        }
+
         this.draw();
     }
 
@@ -102,13 +125,31 @@ export class pt_objects_rectangle {
     On(event, listener) {
         switch (event) {
             case "hover":
+                if (typeof listener == "function") {
+                    this.events.onHover = listener;
+                } else {
+                    Debug.Error(`invalid type`, "The required argument as listener has to be a function.");
+                }
 
+                return this;
                 break;
             case "click":
+                if (typeof listener == "function") {
+                    this.events.onClick = listener;
+                } else {
+                    Debug.Error(`invalid type`, "The required argument as listener has to be a function.");
+                }
 
+                return this;
                 break;
             case "scroll":
+                if (typeof listener == "function") {
+                    this.events.onScroll = listener;
+                } else {
+                    Debug.Error(`invalid type`, "The required argument as listener has to be a function.");
+                }
 
+                return this;
                 break;
             default:
                 Debug.Error("unrecognized instance event", `The given argument '${event}' is not a recognized event for this instance.`);
@@ -127,7 +168,8 @@ export class pt_objects_rectangle {
             if (canvasInstance instanceof pt_renderer_canvas) {
                 canvasInstance.renderObjects.push(this);
 
-                this.ctx = canvasInstance.ctx;
+                this.#ctx = canvasInstance.ctx;
+                this.#canvasInstance = canvasInstance;
 
                 return this;
             } else {
