@@ -1,4 +1,14 @@
-import * as ObamaEngine from "./engine/main.js";
+/*
+ * ObamaEngine test JavaScript file. 
+ * 
+ * ---------------
+ * 
+ * In this file, I will test everything to make sure it works like it should.
+*/
+
+
+// Import ObamaEngine object.
+import * as ObamaEngine from "../../engine/main.js";
 
 // Create options object.
 const RendererOptions = {
@@ -22,20 +32,24 @@ Renderer.SetBackgroundColor([255, 255, 255]);
 const Camera = new ObamaEngine.Camera(0, 0, Renderer.width, Renderer.height).ApplyTo(Renderer);
 
 // Create a player object, basically just a rectangle.
-let Player = new ObamaEngine.Rectangle(10, 20, 50, 50, {
+let Player = new ObamaEngine.Rectangle(0, 0, 50, 50, {
     backgroundColor: [0, 0, 0],
     blurColor: [0, 0, 0],
-    blurStrength: 50
+    blurStrength: 50,
 }).ApplyTo(Renderer);
 
 // Set the camera to the player.
-Camera.SetTo(Player);
+Camera.SetTo(Player).Center(true);
 
 // Applies velocity controller to rectangle.
 let PlayerVelocityController = new ObamaEngine.VelocityController().ApplyTo(Player);
 
 // Set the force strength of the velocity controller to 0.5;
 PlayerVelocityController.forceStrength = 0.5;
+
+let PlayerColissionController = new ObamaEngine.CollisionController();
+
+PlayerColissionController.ApplyTo(Player);
 
 // Create a new WASD+Space key updater.
 let KeyUpdater = new ObamaEngine.WASDSpaceKeyUpdater(keys => {
@@ -58,4 +72,7 @@ function Update() {
 // Call the update function when the page has been loaded.
 window.addEventListener("load", event => {
     Update();
+
+    // Set some variables public.
+    ObamaEngine.GlobalDebug.SetObjectToGlobal({ Camera: Camera, Player: Player, PlayerVelocityController: PlayerVelocityController });
 });

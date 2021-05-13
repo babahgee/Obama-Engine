@@ -82,7 +82,7 @@ export function pt_animate(object, property, startValue, endValue, easingType, a
 
             if (time < 1) {
 
-                time += 0.01;
+                time += 0.005;
 
                 window.requestAnimationFrame(update);
             }

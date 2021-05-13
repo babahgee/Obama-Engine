@@ -4,12 +4,93 @@
  * 
  */
 
+// Initialize everything before exporting things.
+function AutoInitialize() {
+
+    // Logging auto initialize states.
+    Debug.Log("obama engine", "Intializing browser...", "yellow");
+
+    // Check if the await and async keywords are supported.
+
+    let supportsAwait = false;
+    let supportsAsync = false;
+
+    // Check support for async keyword.
+    try {
+        eval("async () => {}");
+    } catch (e) {
+        if (e instanceof SyntaxError) {
+            supportsAsync = false;
+
+            Debug.Log("obama engine", "This browser does not support the 'async' keyword. Be aware that some features may now work.", "yellow");
+        }
+    }
+
+    // Check support for await keyword.
+    try {
+        eval(" await ");
+    } catch (e) {
+        if (e instanceof SyntaxError) {
+            supportsAwait = false;
+
+            Debug.Log("obama engine", "This browser does not support the 'await' keyword. Be aware that some features may not work.", "yellow");
+        }
+    }
+
+    // Check if document object exists.
+    if (!(document && typeof document == "object")) {
+        console.error("The document object does not exist. Please use Obama Engine on web browsers only.");
+
+        if (typeof process == "object") {
+            if (typeof process.exit == "function") {
+                process.exit();
+            }
+        }
+    }
+
+    // Check browser version.
+    if (typeof navigator == "object") {
+        if (typeof navigator.appVersion == "string") {
+
+            let version = navigator.appVersion,
+                supportedVersion = [85, 86, 87, 88, 89, 90],
+                supportsEngine = false;
+
+            if (version.includes("Chrome")) {
+                let chromeFilter = version.substring(version.indexOf("Chrome")).split(" ")[0].split("/")[1];
+
+                chromeFilter = parseInt(chromeFilter);
+
+                for (let i = 0; i < supportedVersion.length; i++) {
+                    if (supportedVersion[i] == chromeFilter) {
+                        supportsEngine = true;
+                    }
+                }
+
+                if (supportsEngine) {
+                    Debug.Log("obama engine", "This browser supports this game engine. :)", "cyan");
+                }
+            } else {
+                Debug.Log("obama engine", "This browser may not support this game engine. Chrome version 85+ is recommended.", "yellow");
+            }
+        }
+    } else {
+        Debug.Log("obama engine", "The browser does not have a navigator object, it may not support it. Be aware that some features may not work.", "yellow");
+    }
+}
+
+AutoInitialize();
+
+
 import { Debug } from "./essentials/logger.js";
 import * as pt_renderer_canvas from "./renderer/canvas.js";
 import * as pt_renderer_camera from "./renderer/camera.js";
 import * as pt_objects_rectangle from "./objects/rectangle.js";
 import * as pt_essentials_animator from "./essentials/animator.js";
 import * as pt_controllers_velocityController from "./controllers/velocityController.js";
+import * as pt_controller_raycastController from "./controllers/rayCastController.js";
+import * as pt_dataloader from "./essentials/dataloader.js";
+import { pt_controllers_collision } from "./controllers/collisionController.js";
 
 export let globalContext, globalCanvas;
 
@@ -178,12 +259,30 @@ export class WASDSpaceKeyUpdater {
                 break;
         }
     }
+    /**Updates listener */
     Update() {
         window.requestAnimationFrame(() => {
             this.Update();
         });
 
         this.listener(this.pressedKey);
+    }
+    /**Destroys instance. */
+    Destroy() {
+        let i = 0;
+
+        while (i < keyUpdaters.length) {
+
+            let updater = keyUpdaters[i];
+
+            if (updater.id == this.id) {
+                keyUpdaters.splice(i, 1);
+
+                return true;
+            }
+
+            i += 1;
+        }
     }
 }
 
@@ -209,3 +308,7 @@ export const Camera = pt_renderer_camera.pt_renderer_camera;
 export const Rectangle = pt_objects_rectangle.pt_objects_rectangle;
 export const Animate = pt_essentials_animator.pt_animate;
 export const VelocityController = pt_controllers_velocityController.pt_controller_velocity;
+export const GlobalDebug = Debug;
+export const RayCastController = pt_controller_raycastController.pt_controllers_raycast;
+export const LoadImageSync = pt_dataloader.pt_loadImageSync;
+export const CollisionController = pt_controllers_collision;

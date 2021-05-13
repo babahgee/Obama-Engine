@@ -36,5 +36,16 @@ export const Debug = {
 
             return [errorType, errorMessage, errorSolution];
         }
+    },
+    /**
+     * Sets an object of variables to global window object.
+     * @param {object} variables
+     */
+    SetObjectToGlobal(variables) {
+        if (typeof variables == "object") {
+            for (let i in variables) {
+                window[i] = variables[i]
+            }
+        }
     }
 }

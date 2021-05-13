@@ -1,6 +1,7 @@
 import { EasingFunctions } from "../essentials/animator.js";
 import { Debug } from "../essentials/logger.js";
 import { GenerateUniqueID } from "../main.js";
+import { pt_renderer_camera } from "./camera.js";
 
 export class pt_renderer_canvas {
     /**
@@ -22,6 +23,10 @@ export class pt_renderer_canvas {
 
         this.width = width;
         this.height = height;
+
+        this.renderWidth = null;
+        this.renderHeight = null;
+
         this.options = options;
 
         this.renderObjects = [];
@@ -201,6 +206,30 @@ export class pt_renderer_canvas {
             return "Undefined argument has been passed. Won't throw an error log.";
         }
     }
+    /**
+     * Sets the max render size, object withing that size will only render.
+     * @param {any} width
+     * @param {any} height
+     */
+    SetRenderSize(width, height) {
+        // Check if arguments are both entered and are a number.
+        let i = 0;
+
+        while (i < arguments.length) {
+
+            let arg = arguments[i];
+
+            if (typeof arg !== "number" && arg !== null) {
+                Debug.Error("invalid argument", "One of the provided arguments is not a number type.");
+
+                return;
+            }
+
+            i += 1;
+        }
+
+
+    }
 
     Render() {
         let i = 0;
@@ -247,25 +276,79 @@ export class RenderObject {
         this.priority = 0 || "highest";
         this.updaters = [];
 
+        this.canDraw = true;
+        this.camera = null;
+        this.renderCamera = null;
     }
     updateMain() {
-        let i = 0;
 
-        while (i < this.updaters.length) {
-
-            let updater = this.updaters[i];
-
-            if (typeof updater.Update == "function") {
-                updater.Update();
+        if (this.camera !== null) {
+            if (typeof this.x == "number" && typeof this.y == "number") {
+                this.camera.UpdateOffset(-this.x, -this.y);
             }
-
-            i += 1;
         }
 
-        this.update();
-    }
-    AddUpdater() {
+        if (this.renderCamera !== null) {
+            if (typeof this.width == "number" && typeof this.height == "number" && typeof this.x == "number" && typeof this.y == "number") {
+                if (this.x > -(this.renderCamera.x + this.renderCamera.cameraWidth / 2) &&
+                    this.x < -(this.renderCamera.x - this.renderCamera.cameraWidth) &&
+                    this.y > -(this.renderCamera.y + this.renderCamera.cameraHeight / 2) &&
+                    this.y < -(this.renderCamera.y - (this.renderCamera.cameraHeight * 2))) {
 
+                    this.canDraw = true;
+
+                } else {
+                    this.canDraw = false;
+                }
+
+                let i = 0;
+
+                while (i < this.updaters.length) {
+
+                    let updater = this.updaters[i];
+
+                    if (typeof updater.Update == "function") {
+                        updater.Update();
+                    }
+
+                    i += 1;
+                }
+
+                this.update();
+            }
+        } else {
+            let i = 0;
+
+            while (i < this.updaters.length) {
+
+                let updater = this.updaters[i];
+
+                if (typeof updater.Update == "function") {
+                    updater.Update();
+                }
+
+                i += 1;
+            }
+
+            this.update();
+        }
+    }
+    /**
+     * Render object only in camera sight.
+     * @param {pt_renderer_camera} camera
+     */
+    RenderInCamera(camera) {
+        if (typeof camera !== "undefined") {
+            if (camera instanceof pt_renderer_camera) {
+                this.renderCamera = camera;
+
+                return this;
+            } else {
+                Debug.Error("Unexpected instance", "The given argument is not a Camera instance.");
+            }
+        } else {
+            Debug.Error("invalid argument", "The given argument has not been defined.");
+        }
     }
     /**
      * Finds for a render object instance in a renderer.

@@ -42,6 +42,7 @@ export class pt_objects_rectangle extends RenderObject {
      * @param {number} styles.blurOffsetX
      * @param {number} styles.blurOffsetY
      * @param {number} styles.blurStrength
+     * @param {string} styles.globalCompositeOperation
      */
     constructor(x, y, width, height, styles) {
         super();
@@ -52,6 +53,10 @@ export class pt_objects_rectangle extends RenderObject {
         this.height = height;
 
         this.styles = styles;
+
+        this.renderImage;
+        this.renderImageWidth = 0;
+        this.renderImageHeight = 0;
 
         this.events = {onHover: undefined};
         this.eventStates = {isHovering: false};
@@ -64,31 +69,40 @@ export class pt_objects_rectangle extends RenderObject {
     draw() {
         if (typeof this.#ctx == "undefined") return;
 
+        /**@type {CanvasRenderingContext2D} */
         let ctx = this.#ctx;
 
         ctx.save();
 
         ctx.beginPath();
-        
-        ctx.rect(this.x, this.y, this.width, this.height);
+
+        if (typeof this.styles.globalCompositeOperation == "string") {
+            ctx.globalCompositeOperation = this.styles.globalCompositeOperation;
+        }
 
         if (typeof this.styles.blurColor == "string") ctx.shadowColor = this.styles.blurColor;
         if (typeof this.styles.blurOffsetX == "number") ctx.shadowOffsetX = this.styles.blurOffsetX;
         if (typeof this.styles.blurOffsetY == "number") ctx.shadowOffsetY = this.styles.blurOffsetY;
         if (typeof this.styles.blurStrength == "number") ctx.shadowBlur = this.styles.blurStrength;
 
-        if (typeof this.styles.backgroundColor == "string") {
-            ctx.fillStyle = this.styles.backgroundColor;
-            ctx.fill();
-        }
+        if (typeof this.renderImage !== "undefined") {
+            ctx.drawImage(this.renderImage, this.x, this.y, this.width, this.height);
+        } else {
+            ctx.rect(this.x, this.y, this.width, this.height);
 
-        if (typeof this.styles.borderWidth == "number") {
-            ctx.lineWidth = this.styles.borderWidth;
-        }
+            if (typeof this.styles.backgroundColor == "string") {
+                ctx.fillStyle = this.styles.backgroundColor;
+                ctx.fill();
+            }
 
-        if (typeof this.styles.borderColor == "string") {
-            ctx.strokeStyle = this.styles.borderColor;
-            ctx.stroke();
+            if (typeof this.styles.borderWidth == "number") {
+                ctx.lineWidth = this.styles.borderWidth;
+            }
+
+            if (typeof this.styles.borderColor == "string") {
+                ctx.strokeStyle = this.styles.borderColor;
+                ctx.stroke();
+            }
         }
 
         ctx.closePath();
@@ -112,7 +126,7 @@ export class pt_objects_rectangle extends RenderObject {
             }
         }
 
-        this.draw();
+        if (this.canDraw) this.draw();
     }
 
     // Public methods
@@ -158,7 +172,19 @@ export class pt_objects_rectangle extends RenderObject {
                 break;
         }
     }
+    /**
+     * 
+     * @param {HTMLImageElement} image
+     */
+    SetRenderImage(image) {
+        if (typeof image !== "undefined" && image instanceof HTMLImageElement) {
+            this.renderImage = image;
 
+            return this;
+        } else {
+            Debug.Error("unexpected instance", "The required argument is not a HTMLImageElement instance.");
+        }
+    }
     /**
      * Applies to canvas instance.
      * @param {pt_renderer_canvas} canvasInstance

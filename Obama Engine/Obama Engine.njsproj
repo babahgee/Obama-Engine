@@ -29,20 +29,24 @@
   </PropertyGroup>
   <ItemGroup>
     <Content Include="app.js" />
+    <Content Include="engine\controllers\collisionController.js" />
+    <Content Include="engine\controllers\rayCastController.js" />
     <Content Include="engine\controllers\velocityController.js" />
     <Content Include="engine\essentials\animator.js" />
     <Content Include="engine\essentials\essentials.js" />
+    <Content Include="engine\essentials\dataloader.js" />
     <Content Include="engine\essentials\logger.js" />
     <Content Include="engine\main.js" />
     <Content Include="engine\objects\rectangle.js" />
     <Content Include="engine\renderer\camera.js" />
     <Content Include="engine\renderer\canvas.js" />
     <Content Include="package.json" />
-    <Content Include="index.html">
+    <Content Include="test\index.html">
       <SubType>Code</SubType>
     </Content>
     <Content Include="README.md" />
-    <Content Include="test.js" />
+    <Content Include="test\scripts\camera.js" />
+    <Content Include="test\scripts\main.js" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="engine\" />
@@ -50,6 +54,8 @@
     <Folder Include="engine\controllers\" />
     <Folder Include="engine\objects\" />
     <Folder Include="engine\renderer\" />
+    <Folder Include="test\" />
+    <Folder Include="test\scripts\" />
   </ItemGroup>
   <Import Project="$(VSToolsPath)\Node.js Tools\Microsoft.NodejsToolsV2.targets" />
 </Project>
