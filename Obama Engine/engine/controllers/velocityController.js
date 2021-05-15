@@ -23,6 +23,7 @@ export class pt_controller_velocity {
             if (renderObject instanceof RenderObject) {
                 this.rObject = renderObject;
 
+                renderObject.velocityController = this;
                 renderObject.updaters.push(this);
 
                 return this;
@@ -68,17 +69,48 @@ export class pt_controller_velocity {
             i += 1;
         }
     }
+    Accelerate(velocityX, velocityY) {
+        if (typeof velocityX == "number") {
+            if (velocityX > 0) {
+                if (this.velX < velocityX) {
+                    this.velX += this.accelerationSpeed;
+                } else {
+                    this.velX = velocityX;
+                }
+            } else {
+                if (this.velX > velocityX) {
+                    this.velX -= this.accelerationSpeed;
+                } else {
+                    this.velX = velocityX;
+                }
+            }
+        }
+        if (typeof velocityY == "number") {
+            if (velocityY > 0) {
+                if (this.velY < velocityY) {
+                    this.velY += this.accelerationSpeed;
+                } else {
+                    this.velY = this.velY;
+                }
+            } else {
+                if (this.velY > velocityY) {
+                    this.velY -= this.accelerationSpeed;
+                } else {
+                    this.velY = velocityY;
+                }
+            }
+        }
+    }
     Update() {
 
-        if (this.velX > this.forceStrength) {
+        if (this.velX > 0) {
             this.velX -= this.forceStrength;
-
         }
         if (this.velX < 0) {
             this.velX += this.forceStrength;
         }
 
-        if (this.velY > this.forceStrength) {
+        if (this.velY > 0) {
             this.velY -= this.forceStrength;
         }
         if (this.velY < 0) {

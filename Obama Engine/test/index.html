@@ -12,14 +12,27 @@
     <meta itemprop="name" content="Obama Engine">
     <meta itemprop="description" content="Obama Engine">
     <style>
+        body {
+            background: #000;
+        }
         canvas {
             position: fixed;
             top: 0;
             left: 0;
+            filter: url('#goo');
         }
     </style>
 </head>
 <body>
+    <svg>
+        <defs>
+            <filter id="goo">
+                <feGaussianBlur in="SourceGraphic" result="blur" stdDeviation="122" id="myFilter" />
+                <feColorMatrix in="blur" mode="matrix" values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 620 -10" result="goo"></feColorMatrix>
+                <feBlend in="SourceGraphic" in2="goo"></feBlend>
+            </filter>
+        </defs>
+    </svg>
     <script src="scripts/main.js" type="module"></script>
 </body>
 </html>

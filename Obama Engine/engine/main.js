@@ -91,8 +91,13 @@ import * as pt_controllers_velocityController from "./controllers/velocityContro
 import * as pt_controller_raycastController from "./controllers/rayCastController.js";
 import * as pt_dataloader from "./essentials/dataloader.js";
 import { pt_controllers_collision } from "./controllers/collisionController.js";
+import { pt_essentials_svgfilter } from "./essentials/svgfilter.js";
 
-export let globalContext, globalCanvas;
+/**@type {CanvasRenderingContext2D} */
+export let globalContext;
+
+/**@type {HTMLCanvasElement} */
+export let globalCanvas;
 
 /**
  * Set a canvas renderer to a global variable.
@@ -312,3 +317,4 @@ export const GlobalDebug = Debug;
 export const RayCastController = pt_controller_raycastController.pt_controllers_raycast;
 export const LoadImageSync = pt_dataloader.pt_loadImageSync;
 export const CollisionController = pt_controllers_collision;
+export const SVGFilter = pt_essentials_svgfilter;

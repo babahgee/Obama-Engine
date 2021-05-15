@@ -50,9 +50,9 @@ export const EasingFunctions = {
  * @param {number} startValue Start property value.
  * @param {number} endValue End property value.
  * @param {"linear" | "ease-out" | "ease-in-out"} easingType Animation easing type.
- * @param {number} animationDuration Duration in seconds.
+ * @param {number} animationSpeed Animation speed.
  */
-export function pt_animate(object, property, startValue, endValue, easingType, animationDuration) {
+export function pt_animate(object, property, startValue, endValue, easingType, animationSpeed) {
 
     // Check if arguments arent defined.
     for (let i = 0; i < arguments.length; i++) {
@@ -76,15 +76,43 @@ export function pt_animate(object, property, startValue, endValue, easingType, a
         let currentPosition = startValue;
 
         function update() {
-            currentPosition = EasingFunctions.easeInOutQuad(time) * finalPosition;
+            switch (easingType) {
+                case "ease-out":
+                    if (endValue > startValue) {
+                        currentPosition = EasingFunctions.easeInOutQuad(time) * finalPosition;
 
-            object[property] = currentPosition;
+                        object[property] = startValue + currentPosition;
 
-            if (time < 1) {
+                        if (time < 1) {
 
-                time += 0.005;
+                            time += animationSpeed;
 
-                window.requestAnimationFrame(update);
+                            window.requestAnimationFrame(update);
+                        }
+                    } else {
+                        currentPosition = EasingFunctions.easeInOutQuad(time) * finalPosition;
+
+                        object[property] = startValue - currentPosition;
+
+                        if (time < 1) {
+
+                            time += animationSpeed;
+
+                            window.requestAnimationFrame(update);
+                        }
+                    }
+                    break;
+                case "linear":
+                    currentPosition -= 2;
+
+                    object[property] = currentPosition;
+
+                    if (time < 1) {
+                        time += animationSpeed;
+
+                        window.requestAnimationFrame(update);
+                    }
+                    break;
             }
         }
 

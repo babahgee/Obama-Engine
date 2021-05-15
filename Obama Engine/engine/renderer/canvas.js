@@ -1,3 +1,4 @@
+import { pt_controllers_collision } from "../controllers/collisionController.js";
 import { EasingFunctions } from "../essentials/animator.js";
 import { Debug } from "../essentials/logger.js";
 import { GenerateUniqueID } from "../main.js";
@@ -276,6 +277,9 @@ export class RenderObject {
         this.priority = 0 || "highest";
         this.updaters = [];
 
+        this.velocityController;
+        this.collisionController;
+
         this.canDraw = true;
         this.camera = null;
         this.renderCamera = null;
@@ -307,10 +311,15 @@ export class RenderObject {
 
                     let updater = this.updaters[i];
 
-                    if (typeof updater.Update == "function") {
-                        updater.Update();
+                    if (updater instanceof pt_controllers_collision) {
+                        if (this.canDraw) {
+                            updater.Update();
+                        }
+                    } else {
+                        if (typeof updater.Update == "function") {
+                            updater.Update();
+                        }
                     }
-
                     i += 1;
                 }
 

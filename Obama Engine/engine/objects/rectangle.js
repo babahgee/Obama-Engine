@@ -62,9 +62,11 @@ export class pt_objects_rectangle extends RenderObject {
         this.eventStates = {isHovering: false};
 
         // Parse style values.
-        if (typeof styles.backgroundColor == "object") this.styles.backgroundColor = convertArrayToString(this.styles.backgroundColor);
-        if (typeof styles.borderColor == "object") this.styles.borderColor = convertArrayToString(this.styles.borderColor);
-        if (typeof styles.blurColor == "object") this.styles.blurColor = convertArrayToString(this.styles.blurColor);
+        if (typeof styles == "object") {
+            if (typeof styles.backgroundColor == "object") this.styles.backgroundColor = convertArrayToString(this.styles.backgroundColor);
+            if (typeof styles.borderColor == "object") this.styles.borderColor = convertArrayToString(this.styles.borderColor);
+            if (typeof styles.blurColor == "object") this.styles.blurColor = convertArrayToString(this.styles.blurColor);
+        }
     }
     draw() {
         if (typeof this.#ctx == "undefined") return;
@@ -88,6 +90,7 @@ export class pt_objects_rectangle extends RenderObject {
         if (typeof this.renderImage !== "undefined") {
             ctx.drawImage(this.renderImage, this.x, this.y, this.width, this.height);
         } else {
+
             ctx.rect(this.x, this.y, this.width, this.height);
 
             if (typeof this.styles.backgroundColor == "string") {
@@ -107,6 +110,14 @@ export class pt_objects_rectangle extends RenderObject {
 
         ctx.closePath();
         ctx.restore();
+
+        // Debug
+        //ctx.beginPath();
+        //ctx.font = "monospace";
+        //ctx.fillStyle = "green";
+        //ctx.fillText(`x: ${this.x} y: ${this.y}`, this.x, this.y - 40);
+        //ctx.closePath();
+
     }
     update() {
 
