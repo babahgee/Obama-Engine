@@ -69,7 +69,14 @@ export class pt_controller_velocity {
             i += 1;
         }
     }
+    /**
+     * Accelerate this controller.
+     * @param {number} velocityX
+     * @param {number} velocityY
+     */
     Accelerate(velocityX, velocityY) {
+
+        // If the velocityX argument is a number.
         if (typeof velocityX == "number") {
             if (velocityX > 0) {
                 if (this.velX < velocityX) {
@@ -85,6 +92,8 @@ export class pt_controller_velocity {
                 }
             }
         }
+
+        // If the velocityY argument is a number.
         if (typeof velocityY == "number") {
             if (velocityY > 0) {
                 if (this.velY < velocityY) {

@@ -30,6 +30,8 @@
   <ItemGroup>
     <Content Include="app.js" />
     <Content Include="engine\controllers\collisionController.js" />
+    <Content Include="engine\controllers\controllerEssentials.js" />
+    <Content Include="engine\controllers\gravityController.js" />
     <Content Include="engine\controllers\rayCastController.js" />
     <Content Include="engine\controllers\velocityController.js" />
     <Content Include="engine\essentials\animator.js" />
@@ -47,8 +49,10 @@
       <SubType>Code</SubType>
     </Content>
     <Content Include="README.md" />
-    <Content Include="test\scripts\camera.js" />
+    <Content Include="test\scripts\assets.js" />
+    <Content Include="test\scripts\environment.js" />
     <Content Include="test\scripts\main.js" />
+    <Content Include="test\scripts\player.js" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="engine\" />

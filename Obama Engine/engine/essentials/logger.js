@@ -34,7 +34,7 @@ export const Debug = {
 
             console.log(`%c${lineText}\n\n%c[ERROR:${errorType}]%c\n\n${errorMessage}\n\n%cPossible solution: ${errorSolution}\n\n${lineText}`, "color: red;", "color: red; background: #000;", "color: red; text-decoration: underline;", "color: red; font-style: italic;");
 
-            return [errorType, errorMessage, errorSolution];
+            return;
         }
     },
     /**

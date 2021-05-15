@@ -4,6 +4,25 @@
  * 
  */
 
+// Import renderer things.
+import * as pt_renderer_canvas from "./renderer/canvas.js";
+import * as pt_renderer_camera from "./renderer/camera.js";
+
+// Import essentials.
+import * as pt_essentials_animator from "./essentials/animator.js";
+import * as pt_dataloader from "./essentials/dataloader.js";
+import { pt_essentials_svgfilter } from "./essentials/svgfilter.js";
+import { Debug } from "./essentials/logger.js";
+
+// Import controllers.
+import { pt_controller_velocity } from "./controllers/velocityController.js";
+import { pt_controllers_raycast } from "./controllers/rayCastController.js";
+import { pt_controllers_collision } from "./controllers/collisionController.js";
+import { pt_controllers_gravity } from "./controllers/gravityController.js";
+
+// Import shapes.
+import * as pt_objects_rectangle from "./objects/rectangle.js";
+
 // Initialize everything before exporting things.
 function AutoInitialize() {
 
@@ -80,18 +99,6 @@ function AutoInitialize() {
 }
 
 AutoInitialize();
-
-
-import { Debug } from "./essentials/logger.js";
-import * as pt_renderer_canvas from "./renderer/canvas.js";
-import * as pt_renderer_camera from "./renderer/camera.js";
-import * as pt_objects_rectangle from "./objects/rectangle.js";
-import * as pt_essentials_animator from "./essentials/animator.js";
-import * as pt_controllers_velocityController from "./controllers/velocityController.js";
-import * as pt_controller_raycastController from "./controllers/rayCastController.js";
-import * as pt_dataloader from "./essentials/dataloader.js";
-import { pt_controllers_collision } from "./controllers/collisionController.js";
-import { pt_essentials_svgfilter } from "./essentials/svgfilter.js";
 
 /**@type {CanvasRenderingContext2D} */
 export let globalContext;
@@ -308,13 +315,26 @@ export function ListenForKey(keyCode, listener) {
     }
 }
 
+
+/* Export constants variables */
+
+// Export renderer tools.
 export const Canvas = pt_renderer_canvas.pt_renderer_canvas;
 export const Camera = pt_renderer_camera.pt_renderer_camera;
-export const Rectangle = pt_objects_rectangle.pt_objects_rectangle;
-export const Animate = pt_essentials_animator.pt_animate;
-export const VelocityController = pt_controllers_velocityController.pt_controller_velocity;
-export const GlobalDebug = Debug;
-export const RayCastController = pt_controller_raycastController.pt_controllers_raycast;
-export const LoadImageSync = pt_dataloader.pt_loadImageSync;
+
+// Export controllers.
+export const GravityController = pt_controllers_gravity;
+export const RayCastController = pt_controllers_raycast;
 export const CollisionController = pt_controllers_collision;
+export const VelocityController = pt_controller_velocity;
+
+// Export essentials.
 export const SVGFilter = pt_essentials_svgfilter;
+export const LoadImageSync = pt_dataloader.pt_loadImageSync; 
+export const Animate = pt_essentials_animator.pt_animate;
+
+// Export shapes.
+export const Rectangle = pt_objects_rectangle.pt_objects_rectangle;
+
+// Export global thingies.
+export const GlobalDebug = Debug;

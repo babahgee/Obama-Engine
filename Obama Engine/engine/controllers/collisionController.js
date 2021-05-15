@@ -1,6 +1,7 @@
 import { Debug } from "../essentials/logger.js";
 import { GenerateUniqueID, globalContext } from "../main.js";
 import { RenderObject } from "../renderer/canvas.js";
+import { CheckForVelocityController } from "./controllerEssentials.js";
 import { pt_controller_velocity } from "./velocityController.js";
 
 const collisionControllers = [];
@@ -16,10 +17,14 @@ function rectIntersect(x1, y1, w1, h1, x2, y2, w2, h2) {
 export class pt_controllers_collision {
     /**Creates a new collision controller */
     constructor() {
+
+        // Collision booleans.
         this.collisionLeft = false;
         this.collisionTop = false;
         this.collisionRight = false;
         this.collisionBotom = false;
+
+        // If this static property is set to true, the applied render object won't move from it's position.
         this.static = false;
 
         this.rObject = null;
@@ -33,35 +38,27 @@ export class pt_controllers_collision {
         if (typeof renderObject !== "undefined") {
             if (renderObject instanceof RenderObject) {
 
-                let hasVelocityController = false;
+                // Checks if the provided render object has a velocity controller.
+                let foundVelocityController = CheckForVelocityController(renderObject);
 
-                // Check in the list of updaters in the render object instance to see if it has a velocity controller.
-                let i = 0;
-
-                while (i < renderObject.updaters.length) {
-
-                    let updater = renderObject.updaters[i];
-
-                    if (updater instanceof pt_controller_velocity) {
-                        hasVelocityController = true;
-                    }
-
-                    i += 1;
-                }
-
-                if (hasVelocityController) {
-                    this.rObject = renderObject;
-
-                    renderObject.updaters.push(this);
-
-                    renderObject.collisionController = this;
-                    collisionControllers.push(this);
-                } else {
-
+                // If the provided render object has no velocity controller.
+                if (!foundVelocityController) {
                     Debug.Error("no velocity controller", "The provided render object has no velocity controller at all.", "Apply a velocity controller to the provided render object.");
-
                     return;
                 }
+
+                // Define the provided render object to this controller.
+                this.rObject = renderObject;
+
+                // Pushes current controller to array of updaters in the provided render object.
+                renderObject.updaters.push(this);
+
+                // Applies current controller to the provided render object.
+                renderObject.collisionController = this;
+
+                // Pushes current controller to global array of collision controllers.
+                collisionControllers.push(this);
+
 
                 return this;
             } else {
@@ -74,75 +71,101 @@ export class pt_controllers_collision {
         }
     }
     Update() {
+        // If the array of global controllers is more than 0
         if (collisionControllers.length > 0) {
 
             let i = 0;
 
+            // If the applied render object to this controller is able to render, start executing the following code.
             if (this.rObject.canDraw) {
+
+                // Loop through the global array of collision controllers.
                 while (i < collisionControllers.length) {
 
+                    // Define the looped controller.
                     let controller = collisionControllers[i];
 
+                    // If the ID of the looped controller matches with ID of the current controller, don't execute the code after.
                     if (controller.id == this.id) return;
 
+                    // Define the render object of the looped controller, each controller has a render object.
                     let collidingObject = controller.rObject;
 
+                    // Checks if the colliding objects actually collides with the current applied render object.
                     if (rectIntersect(this.rObject.x, this.rObject.y, this.rObject.width, this.rObject.height, collidingObject.x, collidingObject.y, collidingObject.width, collidingObject.height)) {
 
+                        // Define the center coordinates of the colliding render object.
                         let collidingObjectCenterX = collidingObject.x + (collidingObject.width / 2);
                         let collidingObjectCenterY = collidingObject.y + (collidingObject.height / 2);
 
+                        // Define the center coordinates of the applied render object.
                         let currentObjectCenterX = this.rObject.x + (this.rObject.width / 2);
                         let currentObjectCenterY = this.rObject.y + (this.rObject.width / 2);
 
+                        // Some epic vector thingies.
                         let vectorX = currentObjectCenterX - collidingObjectCenterX;
                         let vectorY = currentObjectCenterY - collidingObjectCenterY;
 
+                        // If the current controller is static.
                         if (this.static) {
-                            if (vectorY * vectorY > vectorX * vectorX) {
 
+                            // Some Maths thingies.
+                            if (vectorY * vectorY > vectorX * vectorX) {
                                 if (vectorY > 0) {
+                                    // Collision top.
 
                                     collidingObject.y = this.rObject.y - collidingObject.height;
                                     collidingObject.velocityController.velY = 0;
                                 } else {
-                                    console.log(true);
+
+                                    // Collision bottom
                                     collidingObject.y = this.rObject.y + this.rObject.height;
                                     collidingObject.velocityController.velY = 0;
                                 }
                             } else {
                                 if (vectorX > 0) {
-                                    collidingObject.x = this.rObject.x - collidingObject.width;
+                                    // Collision right.
 
+                                    collidingObject.x = this.rObject.x - collidingObject.width;
                                     collidingObject.velocityController.velX = 0;
                                 } else {
-                                    collidingObject.x = this.rObject.x + this.rObject.width;
+                                    // Collision left.
 
+                                    collidingObject.x = this.rObject.x + this.rObject.width;
                                     collidingObject.velocityController.velY = 0;
                                 }
                             }
                         } else {
-                            if (vectorY * vectorY > vectorX * vectorX) {
+                            // If the current controller is not static.
 
+                            if (vectorY * vectorY > vectorX * vectorX) {
                                 if (vectorY > 0) {
+                                    // Collision top.
 
                                     this.rObject.y = collidingObject.y + collidingObject.height;
-
                                     collidingObject.velocityController.velX = this.rObject.velocityController.velX;
                                 } else {
+                                    // Collision bottom.
+
                                     this.rObject.y = collidingObject.y - this.rObject.height;
                                     collidingObject.velocityController.velX = this.rObject.velocityController.velX;
                                 }
                             } else {
                                 if (vectorX > 0) {
+                                    // Collision right.
+
                                     this.rObject.x = collidingObject.x + collidingObject.width;
                                     collidingObject.velocityController.velY = this.rObject.velocityController.velY;
                                 } else {
+                                    // Collision left.
+
                                     this.rObject.x = collidingObject.x - this.rObject.width;
                                     collidingObject.velocityController.velY = this.rObject.velocityController.velY;
                                 }
                             }
                         }
+
+                        // Debug thingies
 
                         //globalContext.save();
                         //globalContext.beginPath();

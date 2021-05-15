@@ -279,6 +279,7 @@ export class RenderObject {
 
         this.velocityController;
         this.collisionController;
+        this.gravityController;
 
         this.canDraw = true;
         this.camera = null;
