@@ -5,12 +5,19 @@ export class pt_renderer_camera {
     constructor(x, y, width, height) {
         this.x = x;
         this.y = y;
+
         this.width = width;
         this.height = height;
         this.cameraWidth = 0;
         this.cameraHeight = 0;
+
         this.offsetX = 0;
         this.offsetY = 0;
+
+        this.scale = {
+            x: 1,
+            y: 1
+        }
 
         this.appliedRenderObjectInstance;
         this.appliedRendererInstance;

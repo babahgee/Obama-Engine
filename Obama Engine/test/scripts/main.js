@@ -35,7 +35,7 @@ export const Camera = new ObamaEngine.Camera(0, 0, Renderer.width, Renderer.heig
 
 Player.CreatePlayer();
 
-for (let i = 0; i < 1210; i++) {
+for (let i = 0; i < 11210; i++) {
     Environment.CreateFloor();
 }
 

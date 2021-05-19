@@ -252,6 +252,7 @@ export class pt_renderer_canvas {
 
         if (typeof this.renderCamera !== "undefined") {
             ctx.translate(this.renderCamera.x, this.renderCamera.y);
+            ctx.scale(this.renderCamera.scale.x, this.renderCamera.scale.y);
         }
 
         while (i < this.renderObjects.length) {

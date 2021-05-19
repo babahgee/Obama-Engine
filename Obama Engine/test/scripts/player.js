@@ -20,7 +20,7 @@ export function CreatePlayer() {
 
     // Set the force strength of the velocity controller to 0.1 and the acceleration speed to 0.5;
     PlayerVelocityController.forceStrength = 0.1;
-    PlayerVelocityController.accelerationSpeed = 0.5;
+    PlayerVelocityController.accelerationSpeed = 0.2;
 
     // Creates and applies a collision controller to the player.
     let PlayerCollisionController = new ObamaEngine.CollisionController().ApplyTo(Player);
@@ -30,8 +30,8 @@ export function CreatePlayer() {
 
     // Create a new WASD+Space key updater.
     let KeyUpdater = new ObamaEngine.WASDSpaceKeyUpdater(keys => {
-        if (keys.d) PlayerVelocityController.Accelerate(40, null);
-        if (keys.a) PlayerVelocityController.Accelerate(-40, null);
+        if (keys.d) PlayerVelocityController.Accelerate(70, null);
+        if (keys.a) PlayerVelocityController.Accelerate(-70, null);
         if (keys.s) PlayerVelocityController.Accelerate(null, 40);
         if (keys.w) PlayerVelocityController.Accelerate(null, -40);
         if (keys.space) PlayerVelocityController.velY = -10;
