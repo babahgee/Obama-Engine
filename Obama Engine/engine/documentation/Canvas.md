@@ -18,7 +18,7 @@ The ``Canvas Renderer`` instance requires 3 arguments, I will list the required 
 ## Methods
 
 - ``AppendToElement(element)`` Appends instance to a element. Requires one argument which has to be a ``HTMLElement``.
-- ``SetBackgroundColor(color)`` Sets background color. Requires one argument which has to be one of ``string`` or ``array``.
+- ``SetBackgroundColor(color)`` Sets background color. Requires one argument which has to be either an ``string`` or an ``array``.
 - ``Destroy(renderObject)`` Destroys a render object applied to this instance. Requires one argument which has to be a ``RenderObject`` instance.
 - ``Render()`` Renders render object applied to this object. Requires no arguments.
 
