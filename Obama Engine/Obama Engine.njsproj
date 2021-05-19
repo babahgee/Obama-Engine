@@ -34,6 +34,7 @@
     <Content Include="engine\controllers\gravityController.js" />
     <Content Include="engine\controllers\rayCastController.js" />
     <Content Include="engine\controllers\velocityController.js" />
+    <Content Include="engine\documentation\Intro.md" />
     <Content Include="engine\essentials\animator.js" />
     <Content Include="engine\essentials\essentials.js" />
     <Content Include="engine\essentials\dataloader.js" />
