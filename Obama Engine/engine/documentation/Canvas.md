@@ -27,11 +27,33 @@ The ``Canvas Renderer`` instance requires 3 arguments, I will list the required 
 // Import Obama Engine.
 import * as ObamaEngine from "./engine/main.js";
 
+// Options for the canvas renderer instance.
 const RendererOptions = {
     lockToWindowSize: true,
     contextMenu: false,
     globalVariables: true
 }
 
+// Creates a canvas called 'Renderer'.
 const Renderer = new ObamaEngine.Canvas(window.innerWidth, window.innerHeight, RendererOptions);
+
+// Append canvas renderer into body element.
+Renderer.AppendToElement(document.body);
+
+
+// Start drawing objects here.
+
+
+// Native update function.
+function Update() {
+	
+	// Render the canvas.
+	Renderer.Render();
+	
+	// Request an animation frame.
+	window.requestAnimationFrame(Update);
+}
+
+// Call the update function when the webpage has been loaded.
+window.addEventListener("load", Update);
 ```
