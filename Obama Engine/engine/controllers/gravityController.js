@@ -2,7 +2,7 @@ import { Debug } from "../essentials/logger.js";
 import { GenerateUniqueID } from "../main.js";
 import { RenderObject } from "../renderer/canvas.js";
 
-import { CheckForVelocityController } from "./controllerEssentials.js";
+import { CheckForCollisionController, CheckForVelocityController } from "./controllerEssentials.js";
 
 const gravityControllers = [];
 
@@ -31,7 +31,7 @@ export class pt_controllers_gravity {
 
                 // Check if the provided render object has a velocity and a collision controller.
                 let foundVelocityController = CheckForVelocityController(renderObject),
-                    foundCollisionController = CheckForVelocityController(renderObject);
+                    foundCollisionController = CheckForCollisionController(renderObject);
 
                 // If one of the found controllers are undefined, stop the execution and throw an error.
                 if (!foundCollisionController || !foundVelocityController) {
@@ -68,6 +68,10 @@ export class pt_controllers_gravity {
         }
     }
     Update() {
-        this.velController.velY += 1;
+        if (!this.collisionController.collisionBottom) {
+            this.velController.velY += this.gravityForce;
+        } if (this.collisionController.collisionTop) {
+            this.velY -= this.gravityForce;
+        }
     }
 }

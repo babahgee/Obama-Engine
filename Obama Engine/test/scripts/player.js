@@ -34,6 +34,7 @@ export function CreatePlayer() {
         if (keys.a) PlayerVelocityController.Accelerate(-40, null);
         if (keys.s) PlayerVelocityController.Accelerate(null, 40);
         if (keys.w) PlayerVelocityController.Accelerate(null, -40);
+        if (keys.space) PlayerVelocityController.velY = -10;
     });
 
     // Shoot lazers

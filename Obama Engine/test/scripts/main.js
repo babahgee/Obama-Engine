@@ -34,7 +34,10 @@ export const Camera = new ObamaEngine.Camera(0, 0, Renderer.width, Renderer.heig
 
 
 Player.CreatePlayer();
-Environment.CreateFloor();
+
+for (let i = 0; i < 1210; i++) {
+    Environment.CreateFloor();
+}
 
 // Native update function.
 function Update() {

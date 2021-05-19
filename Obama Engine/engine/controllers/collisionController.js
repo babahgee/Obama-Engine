@@ -6,6 +6,17 @@ import { pt_controller_velocity } from "./velocityController.js";
 
 const collisionControllers = [];
 
+/**
+ * Rect interesect
+ * @param {number} x1
+ * @param {number} y1
+ * @param {number} w1
+ * @param {number} h1
+ * @param {number} x2
+ * @param {number} y2
+ * @param {number} w2
+ * @param {number} h2
+ */
 function rectIntersect(x1, y1, w1, h1, x2, y2, w2, h2) {
     // Check x and y for overlap
     if (x2 > w1 + x1 || x1 > w2 + x2 || y2 > h1 + y1 || y1 > h2 + y2) {
@@ -22,10 +33,16 @@ export class pt_controllers_collision {
         this.collisionLeft = false;
         this.collisionTop = false;
         this.collisionRight = false;
-        this.collisionBotom = false;
+        this.collisionBottom = false;
 
         // If this static property is set to true, the applied render object won't move from it's position.
         this.static = false;
+
+        // Collides objects to left and right sides of the render object.
+        this.leftAndRightCollision = true;
+
+        // Collides objects to top and bottom sides of the render object.
+        this.topAndBottomCollision = true;
 
         this.rObject = null;
         this.id = GenerateUniqueID(18);
@@ -83,6 +100,7 @@ export class pt_controllers_collision {
                 while (i < collisionControllers.length) {
 
                     // Define the looped controller.
+                    /**@type {pt_controllers_collision} */
                     let controller = collisionControllers[i];
 
                     // If the ID of the looped controller matches with ID of the current controller, don't execute the code after.
@@ -111,28 +129,45 @@ export class pt_controllers_collision {
 
                             // Some Maths thingies.
                             if (vectorY * vectorY > vectorX * vectorX) {
-                                if (vectorY > 0) {
-                                    // Collision top.
+                                if (this.topAndBottomCollision) {
+                                    if (vectorY > 0) {
+                                        // Collision top.
 
-                                    collidingObject.y = this.rObject.y - collidingObject.height;
-                                    collidingObject.velocityController.velY = 0;
-                                } else {
+                                        this.collisionTop = true;
+                                        this.collisionBottom = false;
 
-                                    // Collision bottom
-                                    collidingObject.y = this.rObject.y + this.rObject.height;
-                                    collidingObject.velocityController.velY = 0;
+                                        controller.collisionTop = false;
+                                        controller.collisionBottom = true;
+
+                                        collidingObject.y = this.rObject.y - collidingObject.height;
+                                        collidingObject.velocityController.velY = 0;
+                                    } else {
+                                        // Collision bottom
+
+                                        this.collisionTop = false;
+                                        this.collisionBottom = true;
+
+                                        controller.collisionTop = true;
+                                        controller.collisionBottom = true;
+
+                                        collidingObject.y = this.rObject.y + this.rObject.height;
+                                        collidingObject.velocityController.velY = 0;
+                                    }
                                 }
+
                             } else {
-                                if (vectorX > 0) {
-                                    // Collision right.
+                                if (this.leftAndRightCollision) {
+                                    if (vectorX > 0) {
+                                        // Collision right.
 
-                                    collidingObject.x = this.rObject.x - collidingObject.width;
-                                    collidingObject.velocityController.velX = 0;
-                                } else {
-                                    // Collision left.
+                                        collidingObject.x = this.rObject.x - collidingObject.width;
+                                        collidingObject.velocityController.velX = 0;
+                                    } else {
+                                        // Collision left.
 
-                                    collidingObject.x = this.rObject.x + this.rObject.width;
-                                    collidingObject.velocityController.velY = 0;
+                                        collidingObject.x = this.rObject.x + this.rObject.width;
+                                        collidingObject.velocityController.velY = 0;
+                                    }
                                 }
                             }
                         } else {
@@ -164,20 +199,23 @@ export class pt_controllers_collision {
                                 }
                             }
                         }
-
-                        // Debug thingies
-
-                        //globalContext.save();
-                        //globalContext.beginPath();
-                        //globalContext.moveTo(collidingObjectCenterX, collidingObjectCenterY);
-                        //globalContext.lineTo(currentObjectCenterX, currentObjectCenterY);
-                        //globalContext.strokeStyle = "red";
-                        //globalContext.stroke();
-                        //globalContext.restore();
                     }
+                    if (!rectIntersect(this.rObject.x, this.rObject.y, this.rObject.width, this.rObject.height, collidingObject.x, collidingObject.y, collidingObject.width, collidingObject.height)) {
+                        this.collisionBottom = false;
+                        this.collisionTop = false;
+                        this.collisionLeft = false;
+                        this.collisionRight = false;
+
+                        controller.collisionBottom = false;
+                        controller.collisionTop = false;
+                        controller.collisionLeft = false;
+                        controller.collisionRight = false;
+                    }
+
 
                     i += 1;
                 }
+                
             }
 
         }

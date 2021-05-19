@@ -5,14 +5,21 @@ import * as ObamaEngine from "../../engine/main.js";
 import { Camera, Renderer } from "./main.js";
 
 
+let xAxis = 0;
+
+let GrassBlock = await ObamaEngine.LoadImageSync("https://live.staticflickr.com/3516/3811405243_70511d8797_b.jpg");
+
 export function CreateFloor() {
+    let Block = new ObamaEngine.Rectangle(xAxis * 100, 500, 100, 100, {
+        backgroundColor: [ObamaEngine.RandomBetween(0, 255), ObamaEngine.RandomBetween(0, 255), 255]
+    }).ApplyTo(Renderer).RenderInCamera(Camera).SetRenderImage(GrassBlock);
 
-    // Environment
-    let Floor = new ObamaEngine.Rectangle(0, 500, 21000, 10, {
-        backgroundColor: [255, 255, 255]
-    }).ApplyTo(Renderer);
+    let BlockVelocityController = new ObamaEngine.VelocityController().ApplyTo(Block);
+    let BlockCollisionController = new ObamaEngine.CollisionController().ApplyTo(Block);
 
-    // Creates a velocity and a collision controller and apply it to the floor. The collision controller is static so it cannot move from its position.
-    let FloorVelocityController = new ObamaEngine.VelocityController().ApplyTo(Floor);
-    let FloorCollisionController = new ObamaEngine.CollisionController().ApplyTo(Floor).static = true;
+    BlockCollisionController.static = true;
+    BlockCollisionController.leftAndRightCollision = false;
+
+
+    xAxis += 1;
 }

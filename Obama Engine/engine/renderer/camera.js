@@ -72,6 +72,8 @@ export class pt_renderer_camera {
 
                             this.offsetX = this.appliedRendererInstance.element.width / 2 - (this.width / 2);
                             this.offsetY = this.appliedRendererInstance.element.height / 2 - (this.height / 2);
+
+                            return this;
                         } else {
                             Debug.Error("undefined instance properties", "The render object has no width or height properties. Cannot center the object.");
                             return;
