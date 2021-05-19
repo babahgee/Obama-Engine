@@ -8,9 +8,9 @@ The ``Canvas Renderer`` instance is the most important instances in this entire 
 
 ## Required arguments.
 The ``Canvas Renderer`` instance requires 3 arguments, I will list the required arguments.
-1 width ``number`` | Canvas width
-2 height ``number`` | Canvas height
-3 options ``number`` 
+1. width ``number`` | Canvas width
+2. height ``number`` | Canvas height
+3. options ``number`` 
   - lockToWindowSize ``boolean`` | Locks the canvas when resize
   - contextMenu ``boolean`` | Disables or enables context menu
   - globalVariables ``boolean`` | Set variables applied to this instance to globa.
