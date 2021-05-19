@@ -9,7 +9,7 @@ Obama Engine is a 2D graphics engine made for the web. With Obama Engine, you ca
 The engine, or framework (depends on how you wanna call it), is honestly designed to create 2D video games for the web, but I decided to make it open source. 
 
 ## Why the name 'Obama Engine'?
-Well, I am such a fan of America's 44th president, Barack Obama. A little while ago I saw a funny giv, this one ![obama gaming]![Alt Text](https://tenor.com/view/obama-gaming-sphere-gif-14514677) and I 
+Well, I am such a fan of America's 44th president, Barack Obama. A little while ago I saw a funny giv, this one ![Obama Gaming](https://tenor.com/view/obama-gaming-sphere-gif-14514677) and I 
 that inspired me to create video games. I started with a simple 2D video game called Project: Save Obama which got renamed to Secret Agent: Obama. The goal of that game
 was to save current USA president Joe Biden from Donald Trump. So just a stupid silly joke video game, nothing againts these presidents. After a while coding on the game I noticed
 that there is a lack of support which I didn't made. It should be running on a pre-made engine which should make it easier for me to create the game. So now I am coding on Obama Engine
