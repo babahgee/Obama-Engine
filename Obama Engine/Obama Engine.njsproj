@@ -60,6 +60,7 @@
     <Folder Include="engine\controllers\" />
     <Folder Include="engine\nativeResources\" />
     <Folder Include="engine\nativeResources\images\" />
+    <Folder Include="engine\documentation\" />
     <Folder Include="engine\objects\" />
     <Folder Include="engine\renderer\" />
     <Folder Include="test\" />
