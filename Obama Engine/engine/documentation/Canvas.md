@@ -4,9 +4,9 @@
 - - -
 
 ## Intro
-The ``Canvas Renderer`` instance is the most important instances in this entire project. This allows you to create and render graphics on the web. Without this instance, you cannot show any graphics. Here a example how to create a Canvas Renderer instance.
+The ``Canvas Renderer`` instance is the most important instances in this entire project. This allows you to create and render graphics on the web. Without this instance, you cannot show any graphics.
 
-## Required arguments.
+## Required arguments
 The ``Canvas Renderer`` instance requires 3 arguments, I will list the required arguments.
 1. width ``number`` | Canvas width
 2. height ``number`` | Canvas height
@@ -14,6 +14,13 @@ The ``Canvas Renderer`` instance requires 3 arguments, I will list the required 
   - lockToWindowSize ``boolean`` | Locks the canvas when resize
   - contextMenu ``boolean`` | Disables or enables context menu
   - globalVariables ``boolean`` | Set variables applied to this instance to globa.
+
+## Methods
+
+- ``AppendToElement(element)`` Appends instance to a element. Requires one argument which has to be a ``HTMLElement``.
+- ``SetBackgroundColor(color)`` Sets background color. Requires one argument which has to be one of ``string`` or ``array``.
+- ``Destroy(renderObject)`` Destroys a render object applied to this instance. Requires one argument which has to be a ``RenderObject`` instance.
+- ``Render()`` Renders render object applied to this object. Requires no arguments.
 
 ## Example
 ```javascript
