@@ -1,6 +1,6 @@
 # Canvas Renderer
 ```javascript
-class Canvas
+class Canvas;
 ```
 
 - - -
