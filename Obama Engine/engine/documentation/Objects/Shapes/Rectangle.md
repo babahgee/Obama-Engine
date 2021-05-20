@@ -1,5 +1,7 @@
 # Rectangle
-``Child of RenderObject instance``
+```javascript
+extends RenderObject
+```
 
 - - -
 
