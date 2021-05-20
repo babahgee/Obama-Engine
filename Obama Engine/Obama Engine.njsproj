@@ -34,14 +34,26 @@
     <Content Include="engine\controllers\gravityController.js" />
     <Content Include="engine\controllers\rayCastController.js" />
     <Content Include="engine\controllers\velocityController.js" />
-    <Content Include="engine\documentation\Intro.md" />
+    <Content Include="engine\documentation\Camera.md" />
+    <Content Include="engine\documentation\Canvas.md" />
+    <Content Include="engine\documentation\Controllers\Collision Controller.md" />
+    <Content Include="engine\documentation\Controllers\Essentials.md" />
+    <Content Include="engine\documentation\Controllers\Gravity Controller.md" />
+    <Content Include="engine\documentation\Controllers\Raycast Controller.md" />
+    <Content Include="engine\documentation\Controllers\Velocity Controller.md" />
+    <Content Include="engine\documentation\Objects\Render Object.md" />
+    <Content Include="engine\documentation\Objects\Shapes\Rectangle.md" />
+    <Content Include="engine\documentation\README.md" />
     <Content Include="engine\essentials\animator.js" />
     <Content Include="engine\essentials\essentials.js" />
     <Content Include="engine\essentials\dataloader.js" />
     <Content Include="engine\essentials\logger.js" />
+    <Content Include="engine\essentials\spritesheet.js" />
     <Content Include="engine\essentials\svgfilter.js" />
     <Content Include="engine\main.js" />
     <Content Include="engine\nativeResources\images\Dababy.png" />
+    <Content Include="engine\nativeResources\images\obamasphere.png" />
+    <Content Include="engine\nativeResources\spritesheets\spritesheet-obunga-01.png" />
     <Content Include="engine\objects\rectangle.js" />
     <Content Include="engine\renderer\camera.js" />
     <Content Include="engine\renderer\canvas.js" />
@@ -54,14 +66,19 @@
     <Content Include="test\scripts\environment.js" />
     <Content Include="test\scripts\main.js" />
     <Content Include="test\scripts\player.js" />
+    <Content Include="test\scripts\spritesheet.js" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="engine\" />
+    <Folder Include="engine\documentation\Controllers\" />
+    <Folder Include="engine\documentation\Objects\" />
+    <Folder Include="engine\documentation\Objects\Shapes\" />
     <Folder Include="engine\essentials\" />
     <Folder Include="engine\controllers\" />
     <Folder Include="engine\nativeResources\" />
     <Folder Include="engine\nativeResources\images\" />
     <Folder Include="engine\documentation\" />
+    <Folder Include="engine\nativeResources\spritesheets\" />
     <Folder Include="engine\objects\" />
     <Folder Include="engine\renderer\" />
     <Folder Include="test\" />

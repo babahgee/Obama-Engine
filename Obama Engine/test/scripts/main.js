@@ -33,9 +33,10 @@ Renderer.AppendToElement(document.body);
 export const Camera = new ObamaEngine.Camera(0, 0, Renderer.width, Renderer.height).ApplyTo(Renderer);
 
 
+
 Player.CreatePlayer();
 
-for (let i = 0; i < 11210; i++) {
+for (let i = 0; i < 120; i++) {
     Environment.CreateFloor();
 }
 

@@ -278,6 +278,8 @@ export class RenderObject {
         this.priority = 0 || "highest";
         this.updaters = [];
 
+        this.attachedRenderObjects = [];
+
         this.velocityController;
         this.collisionController;
         this.gravityController;
@@ -328,7 +330,7 @@ export class RenderObject {
                 this.update();
             }
         } else {
-            let i = 0;
+            let i = 0, o = 0;
 
             while (i < this.updaters.length) {
 
@@ -341,7 +343,37 @@ export class RenderObject {
                 i += 1;
             }
 
+            while (o < this.attachedRenderObjects.length) {
+
+                /**@type {RenderObject} */
+                let attachedRenderObject = this.attachedRenderObjects[o];
+
+                attachedRenderObject.x = this.x + attachedRenderObject.attachedOffsetX;
+                attachedRenderObject.y = this.y + attachedRenderObject.attachedOffsetY;
+
+                o += 1;
+            }
+
             this.update();
+        }
+    }
+    /**
+     * Attaches this instance to a render object.
+     * @param {RenderObject} renderObject
+     */
+    AttachTo(renderObject) {
+        if (typeof renderObject !== "undefined" && renderObject instanceof RenderObject) {
+            if (typeof renderObject.attachedRenderObjects == "object") {
+
+                this.attachedOffsetX = this.x;
+                this.attachedOffsetY = this.y;
+
+                renderObject.attachedRenderObjects.push(this);
+
+                return this;
+            }
+        } else {
+            Debug.Error("unexpected instance", "The given argument (as renderObject) is not a RenderObject instance.");
         }
     }
     /**

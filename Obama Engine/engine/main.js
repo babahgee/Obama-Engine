@@ -13,6 +13,7 @@ import * as pt_essentials_animator from "./essentials/animator.js";
 import * as pt_dataloader from "./essentials/dataloader.js";
 import { pt_essentials_svgfilter } from "./essentials/svgfilter.js";
 import { Debug } from "./essentials/logger.js";
+import { pt_essentials_spritesheetcontroller } from "./essentials/spritesheet.js";
 
 // Import controllers.
 import { pt_controller_velocity } from "./controllers/velocityController.js";
@@ -87,6 +88,8 @@ function AutoInitialize() {
                 }
 
                 if (supportsEngine) {
+
+                    console.log("%c ", "width: 120px; height: 120px; padding: 60px; background: url(https://yt3.ggpht.com/ytc/AAUvwnjr4YBPP-xXTWAoD2nPmWtp2zEcgEB5MRM-GHCs=s900-c-k-c0x00ffffff-no-rj); background-size: 120px 120px; background-repeat: no-repeat;");
                     Debug.Log("obama engine", "This browser supports this game engine. :)", "cyan");
                 }
             } else {
@@ -332,6 +335,7 @@ export const VelocityController = pt_controller_velocity;
 export const SVGFilter = pt_essentials_svgfilter;
 export const LoadImageSync = pt_dataloader.pt_loadImageSync; 
 export const Animate = pt_essentials_animator.pt_animate;
+export const SpriteSheetController = pt_essentials_spritesheetcontroller;
 
 // Export shapes.
 export const Rectangle = pt_objects_rectangle.pt_objects_rectangle;

@@ -3,17 +3,20 @@ import * as ObamaEngine from "../../engine/main.js";
 
 // Import exports from custom modules
 import { Camera, Renderer } from "./main.js";
-import { Dababy } from "./assets.js";
+import { Dababy  } from "./assets.js";
+import { PlayerSpriteSheetController } from "./spritesheet.js";
+
+
 
 export function CreatePlayer() {
 
     // Create a player object, basically just a rectangle with a dababy image and apply it to the renderer.
-    let Player = new ObamaEngine.Rectangle(0, 0, 150, 90, {
-        backgroundColor: [255, 0, 0],
-    }).ApplyTo(Renderer).SetRenderImage(Dababy);
+    let Player = new ObamaEngine.Rectangle(0, 0, 60, 90, {
+        borderColor: [255, 0, 0],
+    }).ApplyTo(Renderer);
 
     // Set the camera to the player.
-    Camera.SetTo(Player).Center(true);
+    //Camera.SetTo(Player).Center(true);
 
     // Creates and applies velocity controller to player.
     let PlayerVelocityController = new ObamaEngine.VelocityController().ApplyTo(Player);
@@ -28,6 +31,10 @@ export function CreatePlayer() {
     // Creates and applies a gravity controller to the player.
     let PlayerGravityController = new ObamaEngine.GravityController().ApplyTo(Player);
 
+    let PlayerHealthBar = new ObamaEngine.Rectangle(10, -50, 40, 3, {
+        backgroundColor: [0, 255, 0]
+    }).ApplyTo(Renderer).AttachTo(Player);
+
     // Create a new WASD+Space key updater.
     let KeyUpdater = new ObamaEngine.WASDSpaceKeyUpdater(keys => {
         if (keys.d) PlayerVelocityController.Accelerate(70, null);
@@ -35,17 +42,5 @@ export function CreatePlayer() {
         if (keys.s) PlayerVelocityController.Accelerate(null, 40);
         if (keys.w) PlayerVelocityController.Accelerate(null, -40);
         if (keys.space) PlayerVelocityController.velY = -10;
-    });
-
-    // Shoot lazers
-    ObamaEngine.ListenForKey(69, () => {
-        let Lazer = new ObamaEngine.Rectangle(Player.x + Player.width, Player.y + (Player.height / 2), 25, 25, {
-            backgroundColor: [255, 0, 0],
-            blurColor: [255, 255, 255],
-            blurStrength: 10,
-            globalCompositeOperation: "darken"
-        }).ApplyTo(Renderer).RenderInCamera(Camera);
-
-        let LazerVelocityController = new ObamaEngine.VelocityController().ApplyTo(Lazer).AddForce(50, 0).forceStrength = 0;
     });
 }
