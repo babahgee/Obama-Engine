@@ -1,6 +1,6 @@
 # Render Object 
 ```javascript
-class RenderObject requires ChildInstance
+class RenderObject
 ```
 
 - - -
