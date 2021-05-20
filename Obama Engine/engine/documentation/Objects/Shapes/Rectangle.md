@@ -1,6 +1,6 @@
 # Rectangle
 ```javascript
-extends RenderObject
+class Rectangle extends RenderObject
 ```
 
 - - -
