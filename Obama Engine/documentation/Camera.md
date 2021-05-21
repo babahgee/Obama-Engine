@@ -1,5 +1,7 @@
 # Camera
-``Camera instance``
+```javascript
+class Camera;
+```
 
 - - -
 

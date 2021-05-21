@@ -1,5 +1,7 @@
 # Canvas Renderer
-``Canvas Render instance``
+```javascript
+class Canvas;
+```
 
 - - -
 
