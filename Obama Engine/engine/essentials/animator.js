@@ -1,3 +1,4 @@
+import { GenerateUniqueID } from "../main.js";
 import { RenderObject } from "../renderer/canvas.js";
 import { Debug } from "./logger.js";
 
@@ -127,4 +128,219 @@ export function pt_animate(object, property, startValue, endValue, easingType, a
 
 export function pt_rgbcolor_animator(startValue, endValue, easingType, duration) {
 
+}
+
+export class pt_spritesheet_animator {
+    /**
+     * Animates spritesheets.
+     * @param {Array} spritesheetArray
+     */
+    constructor(spritesheetArray) {
+        this.spriteSheetSet = spritesheetArray;
+
+        this.id = GenerateUniqueID(18);
+        this.creationTimeStamp = Date.now();
+
+        this.animationSets = {};
+        this.selectedAnimationSet = spritesheetArray;
+
+        this.loop = false;
+        this.hasAnimated = false;
+
+        this.tick = 0;
+        this.updateSpeed = 1;
+
+        this.appliedRenderObject = null;
+
+        this.frameX = 0;
+    }
+    /**
+     * Create a animation set.
+     * @param {string} animationName
+     * @param {number} spriteIndexStart
+     * @param {number} spriteIndexEnd
+     */
+    CreateAnimationSet(animationName, spriteIndexStart, spriteIndexEnd) {
+
+        // Check if the arguments are all passed.
+        for (let arg in arguments) {
+            if (typeof arg == "undefined") {
+
+                Debug.Error("undefined argument", "One of the required arguments is not defined.", "Define all the required arguments.");
+
+                this.Destroy();
+
+                return;
+            }
+        }
+
+        // Continue of no error has been occurred.
+        
+        // Check if the first argument is a string.
+        if (typeof animationName == "string") {
+
+            // Check if both spriteIndexStart and spriteIndexEnd are numbers.
+            if (typeof spriteIndexStart !== "number" || typeof spriteIndexStart !== "number") {
+
+                Debug.Error("unexpected argument", "One of the required arguments (as spriteIndexStart or spriteIndexEnd) is not a number");
+                return;
+            }
+
+            // Continue of no error has been occurred.
+
+            // Check if the spriteIndexEnd is larger than the size of the set with sprites
+            if (spriteIndexEnd < this.spriteSheetSet.length + 1) {
+
+                // Start frame indexer.
+                let frame = spriteIndexStart;
+
+                let providedFrames = [];
+
+                // Loop until the end of the provided sprite index length.
+                while (frame < spriteIndexEnd) {
+
+                    providedFrames.push(this.spriteSheetSet[frame]);
+
+                    frame += 1;
+                }
+
+                this.animationSets[animationName] = providedFrames;
+
+                return this.animationSets[animationName];
+            } else{
+                Debug.Error("out of index", "The given value as spriteIndexEnd is larger than the actual set of given sprites.", `Give a value below ${this.spriteSheetSet.length}. Given value: ${spriteIndexEnd}`);
+            }
+
+        } else {
+            Debug.Error("unexpected argument", "The required argument (as animationName), has to be a string.", "Enter a string value.");
+        }
+
+    }
+    /**
+     * Starts animating.
+     * @param {string} animationName
+     */
+    SetAnimation(animationName) {
+
+        // Check if the given argument is a string type.
+        if (typeof animationName == "string") {
+
+            // Check if the provided animation exist in the set of animations.
+            if (typeof this.animationSets[animationName] !== "undefined") {
+
+                this.selectedAnimationSet = this.animationSets[animationName];
+
+            } else {
+                // Get the names of animations.
+
+                let animationNames = "";
+
+                for (let animation in this.animationSets) {
+
+                    let frameLength = this.animationSets[animation].length;
+
+                    animationNames += `- "${animation}" - contains ${frameLength} frames.\n`;
+                }
+
+                Debug.Error("unexisting animation-set", "The provided animation does not exist in the set of animations for in this Animator instance.", `Choose any of the following animations: \n\n${animationNames}`);
+            }
+
+        } else {
+            Debug.Error("unexpected argument", "The required argument (as animationName) is not a string.");
+        }
+     }
+    Update() {
+        if (this.appliedRenderObject !== null) {
+            if (!this.loop) {
+                if (!this.hasAnimated) {
+                    if (this.tick < this.updateSpeed) {
+                        this.tick += 1;
+                    } else {
+                        this.tick = 0;
+
+                        if (this.frameX < this.selectedAnimationSet.length) {
+
+
+                            this.appliedRenderObject.SetRenderImage(this.selectedAnimationSet[this.frameX]);
+
+
+                            this.frameX += 1;
+                        } else {
+                            this.frameX = 0;
+                            this.hasAnimated = true;
+
+                        }
+                    }
+                }
+            } else {
+                if (this.tick < this.updateSpeed) {
+                    this.tick += 1;
+                } else {
+                    this.tick = 0;
+
+                    if (this.frameX < this.selectedAnimationSet.length) {
+
+
+                        this.appliedRenderObject.SetRenderImage(this.selectedAnimationSet[this.frameX]);
+
+
+                        this.frameX += 1;
+                    } else {
+                        this.frameX = 0;
+                        this.hasAnimated = true;
+
+                    }
+                }
+            }
+        } else {
+            Debug.Error("unapplied render object", "There has no render object been applied to this animator.", "Apply a render object in order to continue animating.");
+            return;
+        }
+
+    }
+    Destroy() {
+        if (this.appliedRenderObject !== null) {
+            /**@type {RenderObject} */
+            let renderObject = this.appliedRenderObject;
+
+            let i = 0;
+
+            // Loop through the array of updaters.
+            while (i < renderObject.updaters.length) {
+
+                let updater = renderObject.updaters[i];
+
+                if (updater.id == this.id && updater.creationTimeStamp == this.creationTimeStamp) {
+                    renderObject.updaters.splice(i, 1);
+
+                    return true;
+                }
+
+                i += 1;
+            }
+        }
+    }
+
+    /**
+     * Applies this SpritesheetAnimator instance to a Render Object.
+     * @param {RenderObject} renderObject
+     */
+    ApplyTo(renderObject) {
+
+        // Check if the required argument is not defined and is a instance of RenderObject.
+        if (typeof renderObject !== "undefined") {
+            if (renderObject instanceof RenderObject) {
+
+                // Define provided renderobject to current animator instance.
+                this.appliedRenderObject = renderObject;
+
+                // Pushes current controller instance to the array of updaters in the provided render object.
+                renderObject.updaters.push(this);
+                return this;
+            } else {
+                Debug.Error("unexpected instance", "The given argument (as renderObject) is not a RenderObject instance.", "Enter a RenderObject value.");
+                return;
+            }
+        }
+    }
 }

@@ -43,15 +43,6 @@ export class pt_objects_rectangle extends RenderObject {
      * @param {number} styles.blurOffsetY
      * @param {number} styles.blurStrength
      * @param {string} styles.globalCompositeOperation
-     * 
-     * Signature:
-     * 
-     * ```javascript
-     * {
-     *  width: Number,
-     *  height: Number
-     * }
-     * ```
      */
     constructor(x, y, width, height, styles) {
         super();
@@ -193,7 +184,7 @@ export class pt_objects_rectangle extends RenderObject {
         }
     }
     /**
-     * 
+     * Sets a image and render it into this rectangle.
      * @param {HTMLImageElement} image
      */
     SetRenderImage(image) {

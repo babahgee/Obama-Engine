@@ -18,10 +18,38 @@ The ``Camera`` instance requires 4 arguments when creating. I will list them for
 
 ## Methods
 
-- ``ApplyTo(canvasInstance)`` | Applies camera to a canvas renderer instance. Requires one argument which has to be a ``Canvas Renderer`` instance.
-- ``UpdateOffset(x, y)`` | Updates the render offset. Requires two arguments which both has to be a ``number``.
-- ``Center(boolean)`` | Centers the camera to the render instance size. NOTE: There has to be a render object applied to this instance in order to center. Requires one argument that has to be a ``boolean``.
--  ``SetTo(renderObject)`` | Sets this camera instance to a render object, this instance will follow that render object. Requires on argument which has to be a ``Render Object`` instance.
+```javascript
+ApplyTo(canvasInstance);
+```
+Applies camera to a canvas renderer instance.
+- ``canvasInstance`` | Requires a ``Canvas Renderer`` instance.
+
+<br/>
+
+```javascript
+UpdateOffset(x, y);
+```
+Updates the render offset
+- ``x`` | Requires a number.
+- ``y`` | Requires a number.
+
+<br>
+
+```javascript
+Center(boolean);
+```
+Centers the camera to the render instance size. <br>
+**NOTE**: There has to be a render object applied to this instance in order to center.
+- ``boolean`` | Requires one argument that has to be a ``boolean``, obviously lol.
+
+<br>
+
+```javascript
+SetTo(renderObject);
+```
+Sets this camera instance to a render object, this instance will follow that render object.
+
+-  ``renderObject`` | Requires one argument which has to be a ``Render Object`` instance.
 
 ## Examples
 

@@ -1,13 +1,26 @@
 import { Debug } from "./logger.js";
 
+/**
+ * Resolves image
+ * @param {string} src
+ */
 function resolveImage(src) {
+
+    // Returns a promise instnace.
     return new Promise(resolve => {
+
+        // If the given argument (as src) is equal to "test", resolve the promise instance immediately.
         if (src == "test") {
             resolve(true);
         } else {
+
+            // Create native HTLMImage element.
             let img = new Image();
+
+            // Load image.
             img.src = src;
 
+            // Resolve promise with image element passed when loaded succesfully.
             img.onload = () => {
                 resolve(img);
             }

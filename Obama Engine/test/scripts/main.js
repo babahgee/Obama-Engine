@@ -32,8 +32,6 @@ Renderer.AppendToElement(document.body);
 // Create camera.
 export const Camera = new ObamaEngine.Camera(0, 0, Renderer.width, Renderer.height).ApplyTo(Renderer);
 
-
-
 Player.CreatePlayer();
 
 for (let i = 0; i < 120; i++) {

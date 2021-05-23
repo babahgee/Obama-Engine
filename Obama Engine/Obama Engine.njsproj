@@ -29,6 +29,8 @@
   </PropertyGroup>
   <ItemGroup>
     <Content Include="app.js" />
+    <Content Include="documentation\Essentials\Spritesheet Animator.md" />
+    <Content Include="documentation\Essentials\Spritesheet Controller.md" />
     <Content Include="engine\controllers\collisionController.js" />
     <Content Include="engine\controllers\controllerEssentials.js" />
     <Content Include="engine\controllers\gravityController.js" />
@@ -63,6 +65,13 @@
       <SubType>Code</SubType>
     </Content>
     <Content Include="README.md" />
+    <Content Include="test\raycasting\boundary.js" />
+    <Content Include="test\raycasting\index.html">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="test\raycasting\main.js" />
+    <Content Include="test\raycasting\particle.js" />
+    <Content Include="test\raycasting\ray.js" />
     <Content Include="test\scripts\assets.js" />
     <Content Include="test\scripts\environment.js" />
     <Content Include="test\scripts\main.js" />
@@ -71,6 +80,7 @@
     <Content Include="test\scripts\spritesheet.js" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="documentation\Essentials\" />
     <Folder Include="engine\" />
     <Folder Include="documentation\Controllers\" />
     <Folder Include="documentation\Objects\" />
@@ -85,6 +95,7 @@
     <Folder Include="engine\objects\" />
     <Folder Include="engine\renderer\" />
     <Folder Include="test\" />
+    <Folder Include="test\raycasting\" />
     <Folder Include="test\scripts\" />
   </ItemGroup>
   <Import Project="$(VSToolsPath)\Node.js Tools\Microsoft.NodejsToolsV2.targets" />

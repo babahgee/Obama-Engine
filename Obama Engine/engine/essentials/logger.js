@@ -22,6 +22,13 @@ export const Debug = {
      */
     Error: function (errorType, errorMessage, errorSolution) {
         if (typeof errorType == "string" && typeof errorMessage == "string") {
+
+            let err = new Error();
+
+            let errorStack = err.stack.split("\n");
+            let errorTrace = errorStack[errorStack.length - 1].split("/");
+            let errorTraceFile = errorTrace[errorTrace.length - 1];
+
             errorType = errorType.toUpperCase();
 
             let lineLength = errorMessage.length + 10, lineText = "";
@@ -32,7 +39,7 @@ export const Debug = {
                 errorSolution = "No possible solution found for this error.";
             }
 
-            console.log(`%c${lineText}\n\n%c[ERROR:${errorType}]%c\n\n${errorMessage}\n\n%cPossible solution: ${errorSolution}\n\n${lineText}`, "color: red;", "color: red; background: #000;", "color: red; text-decoration: underline;", "color: red; font-style: italic;");
+            console.log(`%c${lineText}\n\n%c[ERROR:${errorType}] => ${errorTraceFile}%c\n\n${errorMessage}\n\n\n%cPossible solution: ${errorSolution}\n\n${lineText}`, "color: red;", "color: red; background: #000;", "color: red; text-decoration: underline;", "color: red; font-style: italic;");
 
             return;
         }

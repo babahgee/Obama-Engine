@@ -9,7 +9,7 @@ import * as pt_renderer_canvas from "./renderer/canvas.js";
 import * as pt_renderer_camera from "./renderer/camera.js";
 
 // Import essentials.
-import * as pt_essentials_animator from "./essentials/animator.js";
+import { pt_spritesheet_animator, pt_animate } from "./essentials/animator.js";
 import * as pt_dataloader from "./essentials/dataloader.js";
 import { pt_essentials_svgfilter } from "./essentials/svgfilter.js";
 import { Debug } from "./essentials/logger.js";
@@ -334,7 +334,8 @@ export const VelocityController = pt_controller_velocity;
 // Export essentials.
 export const SVGFilter = pt_essentials_svgfilter;
 export const LoadImageSync = pt_dataloader.pt_loadImageSync; 
-export const Animate = pt_essentials_animator.pt_animate;
+export const Animate = pt_animate;
+export const SpriteSheetAnimator = pt_spritesheet_animator;
 export const SpriteSheetController = pt_essentials_spritesheetcontroller;
 
 // Export shapes.
