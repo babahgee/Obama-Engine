@@ -8,6 +8,12 @@ class SpriteSheetAnimator;
 ## Intro
 A SpriteSheetAnimator allows you to animate frames from a spritesheet (cut) and render it to a object dynamically. 
 
+## Required Arguments
+```javascript
+new ObamaEngine.SpriteSheetAnimator(spritesheetArray);
+```
+- ``spritesheetArray`` | Array with sprites.
+
 ## Properties
 - ``animationSets`` | An object with animation frames. (``object``).
 - ``selectedAnimationSet`` | An array with selected animation frames. (``array``).

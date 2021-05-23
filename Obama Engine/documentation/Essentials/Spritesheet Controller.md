@@ -10,6 +10,9 @@ A spritesheet controller allows you to handle animations from a image source. Yo
 image into seperate sprites. Really useful for 2D animations. This works together with the ``SpriteSheetAnimator`` class.
 
 ## Required arguments
+```javascript
+new SpriteSheetController(spritesheetImage);
+```
 This controller requires one argument which has to be a ``HTMLImage`` element. You can load images using the native
 ``LoadImageSync`` method.
 

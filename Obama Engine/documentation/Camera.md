@@ -11,6 +11,10 @@ The Camera instance allows you to render a specific part of the canvas renderer.
 ## Required arguments
 The ``Camera`` instance requires 4 arguments when creating. I will list them for you.
 
+```javascript
+new ObamaEngine.Canvas(x, y, width, height);
+```
+
 1. x ``number`` | Defines the x position.
 2. y ``number`` | Defines the y position.
 3. width ``number`` | Sets the width of the camera.

@@ -10,6 +10,9 @@ The 'Rectangle' class allows you to create a rectangle object. This class requir
 things with this. It doesn't really have to be a rectangle if you understand what I mean ;).
 
 ## Required arguments
+```javascript
+new ObamaEngine.Rectangle(x, y, width, height, styles);
+```
 - ``x`` | Has to be a number.
 - ``y`` | has to be a number.
 - ``width`` | Has to be a number.
