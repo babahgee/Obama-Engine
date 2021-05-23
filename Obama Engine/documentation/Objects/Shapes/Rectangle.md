@@ -16,7 +16,7 @@ things with this. It doesn't really have to be a rectangle if you understand wha
 - ``height`` | Has to be a number.
 - ``styles`` | Has to be a object. See down below for available options.
 
-```css
+```javascript
 {
     backgroundColor: string | arrray,
     borderColor: string | array,
