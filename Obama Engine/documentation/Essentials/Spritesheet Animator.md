@@ -89,7 +89,7 @@ const Player = new ObamaEngine.Rectangle(100, 100, 100, 80, {
 }).ApplyTo(Renderer);
 
 // Load spritesheet image.
-const PlayerSpriteSheet = await ObamaEngine.LoadImageSync("myCoolSpriteSheet.png);
+const PlayerSpriteSheet = await ObamaEngine.LoadImageSync("myCoolSpriteSheet.png");
 
 // Create a spritesheet controller.
 const MySpriteSheetController = new ObamaEngine.SpriteSheetController(PlayerSpriteSheet);
