@@ -29,14 +29,14 @@ ObamaEngine.SetGlobalCanvasRenderer(Renderer);
 // Append canvas renderer into body element.
 Renderer.AppendToElement(document.body);
 
+Renderer.SetBackgroundColor([0, 0, 0]);
+
 // Create camera.
 export const Camera = new ObamaEngine.Camera(0, 0, Renderer.width, Renderer.height).ApplyTo(Renderer);
 
-Player.CreatePlayer();
+Environment.CreateFloor();
 
-for (let i = 0; i < 120; i++) {
-    Environment.CreateFloor();
-}
+Player.CreatePlayer();
 
 // Native update function.
 function Update() {

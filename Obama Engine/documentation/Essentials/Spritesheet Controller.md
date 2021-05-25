@@ -11,7 +11,7 @@ image into seperate sprites. Really useful for 2D animations. This works togethe
 
 ## Required arguments
 ```javascript
-new SpriteSheetController(spritesheetImage);
+new ObamaEngine.SpriteSheetController(spritesheetImage);
 ```
 This controller requires one argument which has to be a ``HTMLImage`` element. You can load images using the native
 ``LoadImageSync`` method.

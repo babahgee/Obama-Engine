@@ -166,6 +166,10 @@ export function RandomBetween(number1, number2) {
         return;
     }
 }
+
+export function CreateVector(x, y) {
+   
+}
 /**
  * UniqueID
  * @param {number} length

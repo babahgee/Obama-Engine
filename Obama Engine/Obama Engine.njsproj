@@ -29,8 +29,13 @@
   </PropertyGroup>
   <ItemGroup>
     <Content Include="app.js" />
+    <Content Include="documentation\Essentials\Generate Unique ID.md" />
+    <Content Include="documentation\Essentials\Listen For Key.md" />
+    <Content Include="documentation\Essentials\Random Between.md" />
+    <Content Include="documentation\Essentials\Set Global Canvas Renderer.md" />
     <Content Include="documentation\Essentials\Spritesheet Animator.md" />
     <Content Include="documentation\Essentials\Spritesheet Controller.md" />
+    <Content Include="documentation\Essentials\WASD + Space Key Updater.md" />
     <Content Include="engine\controllers\collisionController.js" />
     <Content Include="engine\controllers\controllerEssentials.js" />
     <Content Include="engine\controllers\gravityController.js" />
@@ -56,6 +61,7 @@
     <Content Include="engine\nativeResources\audio\minigun_round_shoot.wav" />
     <Content Include="engine\nativeResources\images\Dababy.png" />
     <Content Include="engine\nativeResources\images\obamasphere.png" />
+    <Content Include="engine\nativeResources\spritesheets\spritesheet-obunga-02.png" />
     <Content Include="engine\nativeResources\spritesheets\spritesheet-obunga-01.png" />
     <Content Include="engine\objects\rectangle.js" />
     <Content Include="engine\renderer\camera.js" />

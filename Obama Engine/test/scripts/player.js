@@ -37,15 +37,30 @@ export function CreatePlayer() {
         clip: false
     }).ApplyTo(Renderer).AttachTo(Player);
 
+    const Animator = LoadSprite();
 
     // Create a new WASD+Space key updater.
     let KeyUpdater = new ObamaEngine.WASDSpaceKeyUpdater(keys => {
-        if (keys.d) PlayerVelocityController.velX = 10;
-        if (keys.a) PlayerVelocityController.velX = -10;
+        if (keys.d) {
+            PlayerVelocityController.velX = 10;
+            Animator.SetAnimation("walking-to-right");
+        }
+        if (keys.a) {
+            PlayerVelocityController.velX = -10
+            Animator.SetAnimation("walking-to-left");
+        };
         if (keys.s) PlayerVelocityController.Accelerate(null, 40);
         if (keys.w) PlayerVelocityController.Accelerate(null, -40);
-        if (keys.space) PlayerVelocityController.velY = -10;
-    });
+        if (keys.space) {
 
-    LoadSprite();
+            PlayerVelocityController.velY = -20;
+
+            keys.space = false;
+        };
+
+        // Check if all keys are not pressed
+        if (!keys.w && !keys.a && !keys.s && !keys.d && !keys.space) {
+            Animator.SetAnimation("standing");
+        }
+    });
 }
