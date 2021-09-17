@@ -20,7 +20,7 @@ This framework/engine (whatever you want to call it) is dynamic so you have to i
 
 ```javascript
 // Import ObamaEngine object.
-import * as ObamaEngine from "../../engine/main.js";
+import * as ObamaEngine from "./ObamaEngine/main.js";
 
 // Start writing coding here from the ObamaEngine object.
 ```
